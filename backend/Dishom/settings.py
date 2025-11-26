@@ -21,19 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-change-me-in-prod")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [
-    'safalclasses.com',
-    'www.safalclasses.com',
-    '13.204.95.234',
-]
+# Parse ALLOWED_HOSTS from environment variable (comma-separated)
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS", 
+    "localhost,127.0.0.1,safalclasses.com,www.safalclasses.com"
+).split(",")
 
 
 # CORS
 # ============================================================
-CORS_ALLOWED_ORIGINS = [
-    'https://safalclasses.com',
-    'https://www.safalclasses.com',
-]
+# Parse CORS_ALLOWED_ORIGINS from environment variable (comma-separated)
+cors_origins = os.getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:5173,https://safalclasses.com,https://www.safalclasses.com"
+)
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins.split(",")]
 
 
 # APPS

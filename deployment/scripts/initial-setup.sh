@@ -95,10 +95,10 @@ chmod -R 755 $PROJECT_DIR
 chmod -R 775 $PROJECT_DIR/backend/media
 chmod -R 775 $PROJECT_DIR/backend/logs
 
-# 9. Copy environment file
+### 2. Copy environment file
 print_status "Setting up environment file..."
 if [ ! -f "$PROJECT_DIR/backend/.env" ]; then
-    cp $PROJECT_DIR/backend/.env.production $PROJECT_DIR/backend/.env
+    cp $PROJECT_DIR/backend/.env.example $PROJECT_DIR/backend/.env
     print_warning "Please edit /home/deploy/safalclasses/backend/.env with your settings"
 fi
 
