@@ -149,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # INTERNATIONALIZATION
 # ============================================================
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'  # Indian Standard Time
 USE_I18N = True
 USE_TZ = True
 
@@ -175,13 +175,37 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# SECURITY SETTINGS (PRODUCTION)
+# ============================================================
+if not DEBUG:
+    # HTTPS/SSL
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+    # HSTS (HTTP Strict Transport Security)
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    
+    # Security Headers
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+    
+    # Proxy Headers (for Nginx)
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+    USE_X_FORWARDED_PORT = True
+
+
 # JAZZMIN
 # ============================================================
 JAZZMIN_SETTINGS = {
-    "site_title": "Dishom Classes",
-    "site_header": "Dishom Classes",
-    "site_brand": "Dishom Admin",
-    "welcome_sign": "Welcome to the Dishom Admin Panel",
+    "site_title": "Safal Classes",
+    "site_header": "Safal Classes",
+    "site_brand": "Safal Admin",
+    "welcome_sign": "Welcome to the Safal Classes Admin Panel",
     "search_model": "accounts.CustomUser",
     "use_google_fonts_cdn": True,
 
@@ -200,6 +224,7 @@ JAZZMIN_SETTINGS = {
 
     "topmenu_links": [
         {"name": "Dashboard", "url": "admin:index", "icon": "tachometer-alt"},
+        {"name": "Visit Site", "url": "https://safalclasses.com", "new_window": True},
     ],
 
     "hide_models": ["batch.Chapter", "batch.CourseCategory"],
@@ -214,13 +239,59 @@ JAZZMIN_SETTINGS = {
 }
 
 
-# EMAIL
+# EMAIL CONFIGURATION
 # ============================================================
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
-DEFAULT_FROM_EMAIL = 'no-reply@example.com'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'noreply@safalclasses.com')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
-FRONTEND_BASE_URL = 'http://localhost:5173'
+# Frontend URL
+FRONTEND_BASE_URL = os.getenv('FRONTEND_BASE_URL', 'https://safalclasses.com')
+
+
+# LOGGING (PRODUCTION)
+# ============================================================
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {message}',
+                'style': '{',
+            },
+        },
+        'handlers': {
+            'file': {
+                'level': 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': BASE_DIR / 'logs' / 'django_errors.log',
+                'formatter': 'verbose',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
+            },
+        },
+        'root': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO',
+                'propagate': False,
+            },
+        },
+    }
