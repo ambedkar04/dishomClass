@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Bell, User, ShoppingBag, LogOut, Menu as MenuIcon, BookOpen, FileText, Library, Store, Mail, Info, ChevronRight, Sun, Moon, Users } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router-dom";
@@ -56,14 +57,29 @@ const Menubar = ({ className = "" }) => {
     { name: "About Us", icon: Info, href: "/about" },
   ];
 
-  const classes = [
-     "BCECE",
-    "DCECE",
-    "UG - Botany",
-    "UG - Zoology",
-    "PG - Botany",
-    "PG - Zoology",
-  ];
+  const [classes, setClasses] = useState<string[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    axios
+      .get("/api/batch/course-categories/")
+      .then((res) => {
+        const names: string[] = (res.data?.results || []).map((c: any) => c.name);
+        if (!Array.isArray(names)) return;
+        if (isMounted) {
+          setClasses(names);
+          if (names.length && selectedClass === "Select Class") {
+            setSelectedClass(names[0]);
+          }
+        }
+      })
+      .catch(() => {
+        // Keep silent if API not reachable; UI will still work
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleClassSelect = (className: string) => {
     setSelectedClass(className);

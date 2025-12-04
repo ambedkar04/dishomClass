@@ -188,3 +188,7 @@ poetry.lock
 
 #unnesessory
 deployment
+
+#menual Added
+node_modules
+Zimages

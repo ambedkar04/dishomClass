@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, User, Lock } from "lucide-react";
-import { loginUser, storeAuthData } from "@/lib/api";
+import { loginUser, storeAuthData, fetchCurrentUser } from "@/lib/api";
 
 interface LoginProps {
   onSwitchToRegister?: () => void;
@@ -23,6 +23,7 @@ interface LoginProps {
 
 function Login({ onSwitchToRegister, onSwitchToForgotPassword }: LoginProps) {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -44,18 +45,32 @@ function Login({ onSwitchToRegister, onSwitchToForgotPassword }: LoginProps) {
       });
 
       if (response.data) {
-        // response.data is { access, refresh }
+        // Store authentication tokens
         storeAuthData(response.data, null);
+
+        // Try to fetch current user profile using the new token
+        try {
+          const me = await fetchCurrentUser();
+          setUser({
+            mobile_number: mobileNumber,
+            ...(me as any),
+          });
+        } catch {
+          // Fallback to minimal user when /me is unavailable
+          setUser({ mobile_number: mobileNumber });
+        }
         
-        alert("Login successful! Welcome back.");
-        console.log("Login successful:", response.data);
+        
         
         // Clear form
         setMobileNumber("");
         setPassword("");
         setRememberMe(false);
-        // Navigate to Study page
-        navigate("/study");
+        
+        // Navigate to Study page with a small delay to ensure state updates
+        setTimeout(() => {
+          navigate("/study", { replace: true });
+        }, 100);
       } else if (response.error) {
         // Handle validation errors
         const error = response.error;
@@ -98,19 +113,16 @@ function Login({ onSwitchToRegister, onSwitchToForgotPassword }: LoginProps) {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center pb-8">
+    <div className="p-0">
+      <Card className="w-full rounded-none shadow-none border-none py-0">
+        <CardHeader className="space-y-1 text-center pb-4 px-0">
           <CardTitle className="text-2xl font-bold">
-            Welcome Back
+            Welcome
           </CardTitle>
-          <CardDescription>
-            Please login to access your account.
-          </CardDescription>
         </CardHeader>
 
         <div>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 px-0">
             {/* Mobile Number Field */}
             <div className="space-y-2">
               <Label
@@ -194,7 +206,7 @@ function Login({ onSwitchToRegister, onSwitchToForgotPassword }: LoginProps) {
             </div>
           </CardContent>
 
-          <CardFooter className="pt-4">
+          <CardFooter className="px-0">
             <Button
               onClick={handleLogin}
               size="lg"
@@ -213,8 +225,7 @@ function Login({ onSwitchToRegister, onSwitchToForgotPassword }: LoginProps) {
           </CardFooter>
         </div>
 
-        {/* Sign Up Link */}
-        <div className="text-center py-6">
+        <div className="text-center py-2">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
             <button

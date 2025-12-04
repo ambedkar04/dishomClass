@@ -3,12 +3,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const ProtectedRoute: React.FC = () => {
-  const { user } = useAuth();
+  const { user, hydrated } = useAuth();
 
-  // If no user is logged in, redirect to login
-  // Note: In a real app, you might want to check for a loading state first
+  // Wait until localStorage hydration completes to avoid false redirects on refresh
+  if (!hydrated) {
+    return null;
+  }
+
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from .models import CourseCategory, Subject, Batch, Chapter
 from accounts.models import CustomUser
+from unfold.admin import ModelAdmin
 
 
 @admin.register(CourseCategory)
-class CourseCategoryAdmin(admin.ModelAdmin):
+class CourseCategoryAdmin(ModelAdmin):
     """Admin configuration for CourseCategory."""
     list_display = ('name', 'code', 'batches_count', 'created_at')
     list_filter = ('created_at',)
@@ -37,11 +38,13 @@ class ChapterInline(admin.TabularInline):
 
 
 @admin.register(Subject)
-class SubjectAdmin(admin.ModelAdmin):
+class SubjectAdmin(ModelAdmin):
     list_display = ('name', 'chapters_count', 'teachers_col', 'sme_col', 'updated_at')
 
     ordering = ('name',)
     inlines = (ChapterInline,)
+    search_fields = ('name', 'teachers__full_name', 'sme__full_name')
+    autocomplete_fields = ('sme', 'teachers')
     fieldsets = (
         ('General', {
             'fields': ('name', 'sme', 'teachers'),
@@ -77,7 +80,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 
 @admin.register(Chapter)
-class ChapterAdmin(admin.ModelAdmin):
+class ChapterAdmin(ModelAdmin):
     list_display = ('title', 'subject', 'order', 'created_at', 'updated_at')
     list_filter = ('subject', 'created_at')
     search_fields = ('title', 'subject__name')
@@ -85,12 +88,13 @@ class ChapterAdmin(admin.ModelAdmin):
     # autocomplete_fields = ('subject',)
 
 @admin.register(Batch)
-class BatchAdmin(admin.ModelAdmin):
+class BatchAdmin(ModelAdmin):
     list_display = ('thumbnail_small', 'batch_name', 'course_display', 'teacher_list', 'price_display', 'discount_display', 'duration_display')
 
     readonly_fields = ('thumbnail_preview', 'created_at', 'updated_at', 'discount_percent')
     # Use autocomplete widgets for large user/subject sets. Related admins must set search_fields.
-    autocomplete_fields = ('course_category', 'teachers')
+    autocomplete_fields = ('course_category', 'teachers', 'subjects')
+    search_fields = ('name', 'course_category__name')
     
     fieldsets = (
         ('Basic Information', {

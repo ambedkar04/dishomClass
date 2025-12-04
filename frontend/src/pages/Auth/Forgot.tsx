@@ -83,7 +83,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
       case 1:
         return (
           <>
-            <CardHeader className="space-y-1 text-center pb-6">
+            <CardHeader className="space-y-1 text-center pb-4 px-0">
               <CardTitle className="text-2xl font-bold text-slate-900">
                 Forgot Password?
               </CardTitle>
@@ -93,7 +93,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 px-0">
               <div className="space-y-2">
                 <Label
                   htmlFor="email"
@@ -120,7 +120,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
               </div>
             </CardContent>
 
-            <CardFooter className="pt-4">
+            <CardFooter className="pt-4 px-0">
               <Button
                 onClick={handleSendResetEmail}
                 size="lg"
@@ -143,7 +143,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
       case 2:
         return (
           <>
-            <CardHeader className="space-y-1 text-center pb-6">
+            <CardHeader className="space-y-1 text-center pb-4 px-0">
               <div className="flex justify-center mb-4">
                 <CheckCircle className="h-16 w-16 text-green-500" />
               </div>
@@ -155,7 +155,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 px-0">
               <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <p className="text-sm text-blue-700 mb-2">
                   <strong>Check your email</strong>
@@ -174,7 +174,7 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
               </div>
             </CardContent>
 
-            <CardFooter className="pt-4 space-y-3">
+            <CardFooter className="pt-4 space-y-3 px-0">
               <Button
                 onClick={handleBackToLogin}
                 size="lg"
@@ -204,12 +204,12 @@ function Forgot({ onSwitchToLogin }: ForgotProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="p-0">
+      <Card className="w-full rounded-none shadow-none border-none py-0">
           {renderStepContent()}
 
           {step === 1 && (
-            <div className="text-center py-6">
+            <div className="text-center py-2">
               <button
                 onClick={handleBackToLogin}
                 className="inline-flex items-center text-sm text-muted-foreground hover:underline transition-colors cursor-pointer"

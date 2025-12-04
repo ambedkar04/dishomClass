@@ -1,0 +1,151 @@
+/* Dashboard specific styles */
+
+/* Force root elements to be dark - prevents white on zoom */
+html,
+body {
+    background-color: #111827 !important;
+    min-height: 100vh !important;
+}
+
+html {
+    background-color: #111827 !important;
+}
+
+:root {
+    background-color: #111827 !important;
+}
+
+/* Force Header/Navbar to be dark */
+header,
+nav.bg-white,
+div.bg-white.border-b.border-gray-200 {
+    background-color: #111827 !important;
+    /* gray-900 */
+    border-bottom-color: #1f2937 !important;
+    /* gray-800 */
+    color: #ffffff !important;
+}
+
+/* Fix icons and text inside the header */
+header .text-gray-500,
+header .text-gray-600,
+header .text-gray-700,
+nav .text-gray-500,
+div.bg-white.border-b .text-gray-500 {
+    color: #9ca3af !important;
+    /* gray-400 */
+}
+
+header .text-gray-900,
+nav .text-gray-900 {
+    color: #ffffff !important;
+}
+
+/* Ensure links and buttons in header are visible */
+header a,
+header button {
+    color: #ffffff !important;
+}
+
+header svg {
+    color: #9ca3af !important;
+}
+
+header a:hover,
+header button:hover {
+    color: #60a5fa !important;
+    /* blue-400 */
+}
+
+/* Fix Sidebar Dividers to match Unfold theme */
+aside hr,
+aside .border-t,
+aside .border-b,
+aside .separator,
+nav hr,
+nav .border-t,
+nav .border-b,
+[role="navigation"] hr,
+[role="navigation"] .border-t,
+[role="navigation"] .border-b {
+    border-color: #374151 !important;
+    /* gray-700 */
+}
+
+/* Sidebar section separators */
+.sidebar-separator,
+.menu-separator,
+li.separator {
+    border-top-color: #374151 !important;
+    /* gray-700 */
+}
+
+/* Fix main content area background - remove white lines */
+#content,
+#content-main,
+.content,
+main,
+div[role="main"] {
+    background-color: #111827 !important;
+    /* gray-900 */
+}
+
+/* Remove all white backgrounds */
+.bg-white {
+    background-color: #111827 !important;
+    /* gray-900 */
+}
+
+/* Fix body and container backgrounds */
+body {
+    background-color: #111827 !important;
+}
+
+#container {
+    background-color: #111827 !important;
+}
+
+/* Ensure form and module areas use dark theme */
+.form-row,
+.module {
+    background-color: #1f2937 !important;
+    /* gray-800 */
+    border-color: #374151 !important;
+}
+
+/* Fix breadcrumbs */
+.breadcrumbs {
+    background-color: #1f2937 !important;
+    color: #9ca3af !important;
+}
+
+.breadcrumbs a {
+    color: #60a5fa !important;
+}
+
+/* Additional fixes for white areas when zoomed out */
+#main,
+#wrapper,
+.wrapper,
+.page-wrapper,
+[class*="wrapper"],
+[class*="container"] {
+    background-color: #111827 !important;
+}
+
+/* Force all divs in admin to respect dark theme */
+#content>div,
+#main>div,
+body>div {
+    background-color: transparent !important;
+}
+
+/* Override any inline styles that might add white */
+[style*="background-color: white"],
+[style*="background: white"],
+[style*="background-color: #fff"],
+[style*="background: #fff"],
+[style*="background-color:#fff"],
+[style*="background:#fff"] {
+    background-color: #111827 !important;
+}

@@ -10,9 +10,6 @@ import Blogs from "./pages/home/Blogs";
 import Course from "./pages/home/Course";
 import TestSeries from "./pages/home/TestSeries";
 import StudyMaterial from "./pages/home/StudyMaterial";
-import Login from "./pages/Auth/Login";
-import Forgot from "./pages/Auth/Forgot";
-import Register from "./pages/Auth/Register";
 import BatchPages from "./pages/Batches/BatchPages";
 import BatchDetails from "./pages/Batches/BatchDetails";
 import LibraryPage from "./pages/Library/LibraryPage";
@@ -41,10 +38,7 @@ const App: React.FC = () => {
           <Route path="/weekly-schedule" element={<UpcomingPage />} />
           <Route path="/study-material" element={<StudyMaterial />} />
 
-          {/* Auth Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot-password" element={<Forgot />} />
-          <Route path="/register" element={<Register />} />
+          {/* Auth routes removed as requested */}
 
           {/* Main Pages Routes (Protected) */}
           <Route element={<ProtectedRoute />}>

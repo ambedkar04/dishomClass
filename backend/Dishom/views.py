@@ -26,7 +26,7 @@ def api_info(request):
         'endpoints': {
             'accounts': '/api/accounts/',
             'batch': '/api/batch/',
-            'study': '/api/study/',
+            
             'admin': '/admin/',
         }
     })

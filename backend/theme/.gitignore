@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# Compiled CSS
+static/css/styles.css
+
+# Build artifacts
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

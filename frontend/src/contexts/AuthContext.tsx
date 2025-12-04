@@ -19,12 +19,14 @@ export type User = {
 type AuthContextValue = {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  hydrated: boolean;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
@@ -33,6 +35,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(JSON.parse(cached));
       }
     } catch {}
+    finally {
+      setHydrated(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -42,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [user]);
 
-  const value = useMemo(() => ({ user, setUser }), [user]);
+  const value = useMemo(() => ({ user, setUser, hydrated }), [user, hydrated]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

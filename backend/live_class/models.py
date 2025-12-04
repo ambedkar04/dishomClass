@@ -40,6 +40,18 @@ class YTClass(models.Model):
     
     title = models.CharField(max_length=255)
     youtube_url = models.URLField(help_text="Enter the full YouTube Live Class URL")
+    lecture_video = models.FileField(
+        'Lecture Video', upload_to='live_classes/yt/videos/', null=True, blank=True,
+        help_text='Optional: Upload recorded lecture/video file'
+    )
+    class_note = models.FileField(
+        'Class Note', upload_to='live_classes/yt/notes/', null=True, blank=True,
+        help_text='Optional: Upload class notes (PDF or other)'
+    )
+    dpp_pdf = models.FileField(
+        'DPP PDF', upload_to='live_classes/yt/dpp/', null=True, blank=True,
+        help_text='Optional: Upload DPP as PDF'
+    )
 
     started_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
@@ -117,6 +129,18 @@ class LiveClass(models.Model):
     
     title = models.CharField(max_length=255)
     meeting_id = models.CharField(max_length=100, help_text="VideoSDK Meeting ID")
+    lecture_video = models.FileField(
+        'Lecture Video', upload_to='live_classes/live/videos/', null=True, blank=True,
+        help_text='Optional: Upload recorded lecture/video file'
+    )
+    class_note = models.FileField(
+        'Class Note', upload_to='live_classes/live/notes/', null=True, blank=True,
+        help_text='Optional: Upload class notes (PDF or other)'
+    )
+    dpp_pdf = models.FileField(
+        'DPP PDF', upload_to='live_classes/live/dpp/', null=True, blank=True,
+        help_text='Optional: Upload DPP as PDF'
+    )
 
     started_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)

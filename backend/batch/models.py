@@ -183,21 +183,21 @@ class Batch(models.Model):
             errors['offer_price'] = 'Offer price must be less than regular price'
 
         # Validate teacher count (1-10)
-            # Validate teacher count (1-10)
-            # Note: In Django Admin, M2M relations are saved AFTER the model is saved.
-            # Accessing self.teachers.count() here for a new instance will always be 0.
-            # We skip this check for new instances or handle it in forms/serializers.
-            if self.pk:
-                teacher_count = self.teachers.count()
-                # if teacher_count < 1: ... (Skipping strict check to allow admin save)
-                if teacher_count > 10:
-                    errors['teachers'] = 'Maximum 10 teachers allowed'
+        # Validate teacher count (1-10)
+        # Note: In Django Admin, M2M relations are saved AFTER the model is saved.
+        # Accessing self.teachers.count() here for a new instance will always be 0.
+        # We skip this check for new instances or handle it in forms/serializers.
+        if self.pk:
+            teacher_count = self.teachers.count()
+            # if teacher_count < 1: ... (Skipping strict check to allow admin save)
+            if teacher_count > 10:
+                errors['teachers'] = 'Maximum 10 teachers allowed'
 
-            # Validate subject count (1-10)
-            if self.pk:
-                subject_count = self.subjects.count()
-                if subject_count > 10:
-                    errors['subjects'] = 'Maximum 10 subjects allowed'
+        # Validate subject count (1-10)
+        if self.pk:
+            subject_count = self.subjects.count()
+            if subject_count > 10:
+                errors['subjects'] = 'Maximum 10 subjects allowed'
 
         if errors:
             raise ValidationError(errors)

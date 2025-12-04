@@ -6,10 +6,10 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #edf2fb;
-  --foreground: oklch(0.145 0 0);
-  --card: #edf2fb;
-  --card-foreground: oklch(0.145 0 0);
+  --background: #ffffff;
+  --foreground: oklch(0% 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0% 0 0);
   --popover: #edf2fb;
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);

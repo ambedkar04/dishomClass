@@ -12,7 +12,7 @@ import Forgot from "@/pages/Auth/Forgot";
 import Register from "@/pages/Auth/Register";
 import {
   NavigationMenu,
-  NavigationMenuItem,
+  NavigationMenuItem, 
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
@@ -29,7 +29,7 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "Blogs", href: "/blogs" },
     { name: "Courses", href: "/course" },
-    { name: "Test Series", href: "/test-series" },
+    { name: "Test Series", href: "/test-series-free" },
     { name: "Study Material", href: "/study-material" },
   ];
 
@@ -98,12 +98,8 @@ const Navbar = () => {
           <Button 
             className="px-3 md:px-6 py-2 h-10 text-base md:text-[18px] bg-blue-600 hover:bg-blue-700 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
             onClick={() => {
-              if (isDesktop) {
-                setAuthView('login');
-                setIsDialogOpen(true);
-              } else {
-                navigate('/login');
-              }
+              setAuthView('login');
+              setIsDialogOpen(true);
             }}
           >
             <span className="hidden sm:inline">Login / Register</span>

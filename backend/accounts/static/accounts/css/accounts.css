@@ -1,0 +1,27 @@
+/* Admin list view enhancements for CustomUser */
+
+/* Make thumbnail column compact and circular */
+td.field-profile_thumbnail img {
+  border-radius: 50%;
+  border: 1px solid #0c761f;
+  padding: 1px;
+}
+
+/* Highlight inactive users with subtle background on the is_active cell */
+td.field-is_active {
+  position: relative;
+}
+td.field-is_active:has(img[src*="icon-no"])::after {
+  content: "Inactive";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: #b91c1c;
+}
+
+/* Address column wrap */
+td.field-get_address {
+  white-space: normal;
+}

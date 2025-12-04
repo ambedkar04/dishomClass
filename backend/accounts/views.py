@@ -23,22 +23,10 @@ class RegisterView(APIView):
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
 
-            user_data = {
-                "mobile_number": user.mobile_number,
-                "email": user.email,
-                "full_name": user.get_full_name(),
-                "role": user.role,
-                "district": user.district,
-                "state": user.state,
-                "pincode": user.pincode,
-                "batch_name": user.batch_name,
-                "subjects": user.subjects,
-            }
-
             return Response(
                 {
                     "tokens": {"refresh": str(refresh), "access": access_token},
-                    "user": user_data,
+                    "message": "Registration successful! Please log in.",
                 },
                 status=status.HTTP_201_CREATED,
             )

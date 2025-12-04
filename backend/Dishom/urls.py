@@ -9,7 +9,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
     path('api/batch/', include('batch.urls')),
-    path('api/study/', include('study.urls')),
+    path('api/dashboard/', include('dashboard.urls')),
+
     path("__reload__/", include("django_browser_reload.urls")),
     
     # Health check & API info

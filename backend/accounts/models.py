@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager, Group as BaseGroup
 from django.db import models
 from django.core.validators import RegexValidator
 
@@ -118,3 +118,17 @@ class CustomUser(AbstractUser):
 
         if errors:
             raise ValidationError(errors)
+
+
+class CustomGroup(BaseGroup):
+    """Custom Group model extending Django's default Group"""
+    description = models.TextField('Description', blank=True, null=True)
+    created_at = models.DateTimeField('Created At', auto_now_add=True)
+    updated_at = models.DateTimeField('Updated At', auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Group'
+        verbose_name_plural = 'Groups'
+        
+    def __str__(self):
+        return self.name

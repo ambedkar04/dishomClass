@@ -79,7 +79,7 @@ function Register({ onSwitchToLogin }: RegisterProps) {
         // Store authentication data
         const { tokens, user } = response.data;
         storeAuthData(tokens, user);
-        alert("Registration successful! Welcome!");
+        
         navigate("/study"); // Redirect to Study since Profile was removed
       } else if (response.error) {
         // Handle validation errors
@@ -117,15 +117,15 @@ function Register({ onSwitchToLogin }: RegisterProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg">
-        <CardHeader className="space-y-1 text-center pb-8">
+    <div className="p-0">
+      <Card className="w-full rounded-none shadow-none border-none py-0">
+        <CardHeader className="space-y-1 text-center pb-4 px-0">
           <CardTitle className="text-2xl font-bold">
             Create an Account
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="space-y-4 px-6">
+        <CardContent className="space-y-4 px-0">
             {/* Full Name */}
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
@@ -228,7 +228,7 @@ function Register({ onSwitchToLogin }: RegisterProps) {
             </div>
           </CardContent>
 
-          <CardFooter className="px-6">
+          <CardFooter className="px-0">
             <Button
               onClick={handleRegister}
               disabled={isLoading}
@@ -246,8 +246,7 @@ function Register({ onSwitchToLogin }: RegisterProps) {
             </Button>
           </CardFooter>
 
-          {/* Login Link */}
-          <div className="text-center py-6 px-6">
+          <div className="text-center py-2">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
               <button

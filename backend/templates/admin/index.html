@@ -1,0 +1,139 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}Safal Admin{% endblock %}
+
+{% block branding %}
+{% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'admin/css/dashbord.css' %}">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          gray: {
+            900: '#111827',
+            800: '#1F2937',
+            400: '#9CA3AF',
+          }
+        }
+      }
+    }
+  }
+</script>
+<script>
+  // Force Navbar to be Dark
+  document.addEventListener("DOMContentLoaded", function () {
+    const header = document.querySelector("header") || document.querySelector(".bg-white.border-b");
+    if (header) {
+      header.classList.remove("bg-white", "border-gray-200");
+      header.classList.add("bg-gray-900", "border-gray-800", "text-white");
+
+      // Fix icons and text
+      header.querySelectorAll(".text-gray-500").forEach(el => {
+        el.classList.remove("text-gray-500");
+        el.classList.add("text-gray-400");
+      });
+
+      header.querySelectorAll(".text-gray-700").forEach(el => {
+        el.classList.remove("text-gray-700");
+        el.classList.add("text-gray-300");
+      });
+    }
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="bg-gray-800 text-white min-h-screen p-8 -m-4 rounded-lg">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <!-- Active Users -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-gray-400 text-sm">Active Users</h3>
+          <span class="material-symbols-outlined text-gray-400">group</span>
+        </div>
+        <p class="text-4xl font-bold" id="activeUsers">1,120</p>
+      </div>
+
+      <!-- New Enrollments -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-gray-400 text-sm">New Enrollments</h3>
+          <span class="material-symbols-outlined text-gray-400">person_add</span>
+        </div>
+        <p class="text-4xl font-bold" id="newEnrollments">450</p>
+      </div>
+
+      <!-- Live Classes Running -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-gray-400 text-sm">Live Classes Running</h3>
+          <span class="material-symbols-outlined text-gray-400">live_tv</span>
+        </div>
+        <p class="text-4xl font-bold" id="liveClasses">5</p>
+      </div>
+
+      <!-- Revenue Today -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-gray-400 text-sm">Revenue (Today)</h3>
+          <span class="material-symbols-outlined text-gray-400">currency_rupee</span>
+        </div>
+        <p class="text-4xl font-bold" id="revenue">₹12,400</p>
+      </div>
+    </div>
+
+    <!-- Charts Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <!-- Active Users - 7 Days -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <h3 class="text-lg font-semibold mb-6">Active Users - 7 Days</h3>
+        <div class="h-64">
+          <canvas id="activeUsersChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Enrollments - 7 Days -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <h3 class="text-lg font-semibold mb-6">Enrollments - 7 Days</h3>
+        <div class="h-64">
+          <canvas id="enrollmentsChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue Trend and Doughnut -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Revenue Trend -->
+      <div class="bg-gray-900 rounded-xl p-6 border border-gray-700">
+        <h3 class="text-lg font-semibold mb-6">Revenue Trend (30 Days)</h3>
+        <div class="h-80">
+          <canvas id="revenueTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Activity Breakdown Doughnut -->
+      <div class="bg-gray-900 rounded-xl p-4 border border-gray-700">
+        <h3 class="text-lg font-semibold mb-6">Activity Breakdown</h3>
+        <div class="h-80 flex items-center justify-center">
+          <canvas id="activityDoughnutChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'admin/js/dashboard.js' %}"></script>
+{% endblock %}

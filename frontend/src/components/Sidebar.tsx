@@ -132,12 +132,12 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile Sidebar - Visible on small screens, scrollable if content overflows */}
-      <div className="md:hidden w-full overflow-y-auto border-b border-gray-200">
+      <div className="md:hidden w-[calc(100%-20px)] overflow-y-auto border-b border-gray-200">
         <SidebarContent />
       </div>
 
       {/* Tablet, Desktop, and Laptop Sidebar - Always Visible */}
-      <div className="hidden md:flex md:w-60 lg:w-72 xl:w-80 flex-col sticky top-0 h-[100dvh] overflow-y-auto">
+      <div className="hidden md:flex md:w-[220px] lg:w-[268px] xl:w-[300px] flex-col sticky top-0 h-[100dvh] overflow-y-auto">
         <SidebarContent />
       </div>
     </>
